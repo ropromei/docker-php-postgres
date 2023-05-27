@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+  
+  app:
+    build: .
+    ports:
+      - 8080:80
+    environment:
+      - DBHOST=db
+    depends_on:
+      - db
+  
+  db:
+    image: postgres:alpine
+    environment:
+      POSTGRES_DB: testapp
+      POSTGRES_USER: testapp
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./dbinit/initial.sql:/docker-entrypoint-initdb.d/initial.sql
